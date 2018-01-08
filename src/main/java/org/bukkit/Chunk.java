@@ -130,4 +130,18 @@ public interface Chunk {
      * @return true if slimes are able to spawn in this chunk
      */
     boolean isSlimeChunk();
+
+    /**
+     * With {@code sticky==true} force-loads the chunk at the chunk coordinates specified into the player chunks and
+     * marks the resulting chunk as sticky in the player chunk map. Useful for plugins that would like to force chunk
+     * ticks even in case they are not loaded yet, e.g., during plugin start-up. With {@code sticky==false} the chunk is
+     * marked as no longer being sticky in the player chunk map, and if no player is currently seeing this chunk then
+     * the chunk is removed from the player chunk map.
+     */
+    void setSticky(boolean sticky);
+    
+    /**
+     * @return {@code true} whether this player chunk will remain loaded even if it has no player associated anymore
+     */
+    boolean isSticky();
 }

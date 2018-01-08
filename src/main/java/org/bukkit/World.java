@@ -152,6 +152,24 @@ public interface World extends PluginMessageRecipient, Metadatable {
     public Chunk[] getLoadedChunks();
 
     /**
+     * Gets an array of all {@link Chunk#isSticky() sticky} {@link Chunk}s
+     *
+     * @return Chunk[] containing all sticky chunks
+     */
+    public Chunk[] getStickyChunks();
+    
+    /**
+     * Checks if the specified {@link Chunk} is {@link Chunk#isSticky() sticky} in the
+     * player chunk map and hence will, e.g., continue to receive random block ticks
+     * when no player is near.
+     *
+     * @param x X-coordinate of the chunk
+     * @param z Z-coordinate of the chunk
+     * @return true if the chunk is sticky, otherwise false
+     */
+    public boolean isChunkSticky(int x, int z);
+
+    /**
      * Loads the specified {@link Chunk}
      *
      * @param chunk The chunk to load
