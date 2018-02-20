@@ -3,6 +3,7 @@ package org.bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
 /**
  * Represents a chunk of blocks
@@ -132,13 +133,19 @@ public interface Chunk {
     boolean isSlimeChunk();
 
     /**
-     * With {@code sticky==true} force-loads the chunk at the chunk coordinates specified into the player chunks and
-     * marks the resulting chunk as sticky in the player chunk map. Useful for plugins that would like to force chunk
-     * ticks even in case they are not loaded yet, e.g., during plugin start-up. With {@code sticky==false} the chunk is
-     * marked as no longer being sticky in the player chunk map, and if no player is currently seeing this chunk then
-     * the chunk is removed from the player chunk map.
+     * With {@code sticky==true} this chunk will, as long as it is loaded, receive ticks, even if no player is near.
+     * This way, e.g., crops will continue to grow, and villagers will move and farm. Note that setting this chunk
+     * sticky only will not automatically keep it from getting unloaded from the server. Additional techniques such
+     * as receiving and {@link ChunkUnloadEvent#setCancelled(boolean) cancelling} a {@link ChunkUnloadEvent} for
+     * this chunk are required to ensure that this chunk is not unloaded from the server.
+     * <p>
      * 
-     * @param sticky whether to set this chunk sticky or not
+     * With {@code sticky==false} the chunk is marked as no longer being sticky, and if no player is currently seeing
+     * this chunk then the chunk will no longer receive ticks, so, e.g., crops will stop growing.
+     * <p>
+     * 
+     * @param sticky
+     *            whether to set this chunk sticky or not
      * @see #isSticky()
      */
     void setSticky(boolean sticky);
