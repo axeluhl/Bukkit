@@ -137,11 +137,17 @@ public interface Chunk {
      * ticks even in case they are not loaded yet, e.g., during plugin start-up. With {@code sticky==false} the chunk is
      * marked as no longer being sticky in the player chunk map, and if no player is currently seeing this chunk then
      * the chunk is removed from the player chunk map.
+     * 
+     * @param sticky whether to set this chunk sticky or not
+     * @see #isSticky()
      */
     void setSticky(boolean sticky);
     
     /**
+     * Tells whether this chunk has been marked as sticky using {@link #setSticky(boolean)} and hence keeps receiving ticks.
+     * 
      * @return {@code true} whether this player chunk will remain loaded even if it has no player associated anymore
+     * @see #setSticky(boolean)
      */
     boolean isSticky();
 }
